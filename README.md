@@ -4,8 +4,10 @@
 
 ### Windows - Mingw
 You will need Mingw with make and c++ compiler installed. Once in Mingw-cli you can install those using pacman.
-```pacman -S make
-pacman -S g++```
+```
+pacman -S make
+pacman -S g++
+```
 Download and place appropriate [SFML](https://www.sfml-dev.org/) on project-root directory.
 
 As a workaround `make` should be called from PowerShell! (LSHIFT-right click...)
