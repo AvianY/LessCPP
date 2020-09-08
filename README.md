@@ -3,7 +3,7 @@
 ## Install
 
 ### Windows - Mingw
-You will need Mingw with make and c++ compiler installed. Once in Mingw-cli you can install those using pacman.
+You will need Mingw with `make` and `g++` compiler installed. Once in Mingw-cli you can install those using pacman.
 ```
 pacman -S make
 pacman -S g++
