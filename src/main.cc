@@ -57,6 +57,7 @@ int main() {
 					window.close();
 				}
 			}
+			// HUMAN
 			if ( game.getState() != State::ENDED and game.active_side() == Side::WHITE ) {
 				// GRAB PLAYER
 				if (event.type == sf::Event::MouseButtonPressed) {
@@ -87,11 +88,11 @@ int main() {
 					}
 				}
 			}
+			// AI
 			else if ( game.getState() != State::ENDED and game.active_side() == Side::BLACK ) {
 				auto path = recurseFindOptimal(game, Side::BLACK, 1, 0, 100, evaluation(game)).value();
 				for( auto elem: path) {
 					if (game.active_side() != Side::BLACK) break;
-					std::this_thread::sleep_for(std::chrono::seconds(1));
 					auto newLocation = game.movePlayer(std::get<0>(elem), std::get<1>(elem));
 					gui.getPlayers(Side::BLACK)[static_cast<uint>(std::get<0>(elem))].setLocation(newLocation.value());
 					gui.getPlayers(Side::BLACK)[static_cast<uint>(std::get<0>(elem))].resetPosition();

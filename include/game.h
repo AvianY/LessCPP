@@ -18,7 +18,7 @@ private:
 	int m_moves_left = 3;
     State m_state = State::ONGOING;
     Side m_active_side = Side::WHITE;
-    Side m_winning_side;
+    Side m_winning_side = Side::NONE;
 	int m_white_moves = 0;
 	int m_black_moves = 0;
 

@@ -8,6 +8,15 @@
 
 namespace wall {
 
+	// One "WallConfig" relates to 2x2 block on board
+	// A wall config has up to 3 wall segments
+	// Wall segment is short blue line of length 1. (not 2!)
+	// A wall segment is encoded by 3 numbers:
+	// {first, second, third} <-- wall segment
+	// first  number denotes -1 (horizontal), 1 (vertical), -2 (no wall/not used)
+	// second number denotes -1 (left/up), 0 (middle), 1 (right/down)
+	// third  number denotes -1 (left/up) or 1 (right/down)
+
 		constexpr WallConfig bFullSide = {
 						{
 										{1, -1, -1},
@@ -62,7 +71,7 @@ namespace wall {
 		};
 
 
-		constexpr std::array<WallConfig, 7> wall_configs{
+		constexpr std::array<WallConfig, 7> unique_wall_configs{
 						bFullSide, bHalfSide, bZigZag, bT_Block, bTopLeft, bTopRight, bBottomRight};
 
         WallConfig rotateWallConfig(WallConfig wall, uint rotation);
@@ -73,11 +82,11 @@ namespace wall {
             std::uniform_int_distribution<unsigned int> rand0to6(0, 6);
             std::uniform_int_distribution<unsigned int> rand0to3(0, 3);
 
-            std::array<WallConfig, N> tmp;
+            std::array<WallConfig, N> wallconfig;
             for (size_t i = 0; i != N; ++i) {
-                tmp[i] = wall::rotateWallConfig(wall_configs[rand0to6(eng)], rand0to3(eng));
+				wallconfig[i] = wall::rotateWallConfig(unique_wall_configs[rand0to6(eng)], rand0to3(eng));
             }
-            return tmp;
+            return wallconfig;
         }
 
 		constexpr bool hasWallSeg(const WallConfig &config, const WallSeg &seg) {

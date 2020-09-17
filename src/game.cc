@@ -47,6 +47,7 @@ void Game::nextTurn() {
     else if ( playersInLocations(m_whiteLocations, blackStart) ) { m_state = State::LAST_TURN; m_moves_left = 3 - m_moves_left; }
     else { m_moves_left = 3; }
 
+    // Wait if black also reaches end in same turn
     if ( m_state == State::ENDED ) {
         if ( playersInLocations(m_blackLocations, whiteStart) and playersInLocations(m_whiteLocations, blackStart) ) m_winning_side = Side::NONE;
         else if (playersInLocations(m_whiteLocations, blackStart)) m_winning_side = Side::WHITE;
@@ -56,8 +57,9 @@ void Game::nextTurn() {
 
 void Game::setGameOver(Side winner) { m_state = State::ENDED; m_winning_side = winner; }
 
+// Return number of wall segments between start and end.
 constexpr int Game::countInnerWalls(Location const start, Location const end) const {
-
+    
     // differences
 	int const dx = end.x - start.x;
 	int const dy = end.y - start.y;
@@ -70,9 +72,6 @@ constexpr int Game::countInnerWalls(Location const start, Location const end) co
 	uint const ey = uint(end.y / 2);
     WallConfig const & wstart = m_wall_matrix[sy][sx];
     WallConfig const & wend = m_wall_matrix[ey][ex];
-
-    // blocks are orthogonal and at most one space apart
-//    assert((dx == 0 && abs(dy) == 1) || (abs(dx) == 1 && dy == 0));
 
     int const first = (dx ? 1 : -1);
     int const second = (sx == ex && sy == ey ? 0 : dx + dy);
@@ -87,6 +86,7 @@ constexpr int Game::countInnerWalls(Location const start, Location const end) co
     return num;
 }
 
+// Is there a Piece on that Location?
 constexpr bool Game::existsPlayerAtLocation(Location const location) const {
     bool toReturn = false;
     for (const auto &player : m_whiteLocations) {
@@ -98,6 +98,7 @@ constexpr bool Game::existsPlayerAtLocation(Location const location) const {
     return toReturn;
 }
 
+// For AI
 constexpr std::optional<int> Game::moveCost(Location old_location, Direction direction) const {
     if (std::optional<Location> new_location = old_location + direction) {
         return countInnerWalls(old_location, new_location.value());
@@ -105,6 +106,7 @@ constexpr std::optional<int> Game::moveCost(Location old_location, Direction dir
     return {};
 }
 
+// For human
 constexpr std::optional<int> Game::moveCost(Location oldL, Location newL) const {
 
     if (oldL == newL) return 0;
@@ -148,6 +150,7 @@ bool Game::decrementMoves(int moves) {
     return true;
 }
 
+// for AI
 std::optional<Location> Game::movePlayer(int player_num, Direction direction) {
     Location old_location = getPlayerLocation(player_num);
 	std::optional<int> cost;
@@ -173,6 +176,7 @@ std::optional<Location> Game::movePlayer(int player_num, Direction direction) {
     return (new_location && cost)? new_location: std::nullopt;
 }
 
+// For human
 std::optional<Location> Game::movePlayer(Location old_location, Location new_location){
     auto player = getPlayerNumber(old_location);
     if (!player) return {};
