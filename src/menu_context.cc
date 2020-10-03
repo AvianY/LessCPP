@@ -1,6 +1,5 @@
 #include "menu_context.h"
 
-
 MenuContext::MenuContext() {
 	rentex.create(window_width, window_height);
 }
@@ -10,6 +9,7 @@ Context* MenuContext::update(const sf::Event & event, const sf::Vector2f & mouse
 	if (event.type == sf::Event::MouseButtonPressed) {
 		if (quitButton.contains(mouse_pos)) quit = true;
 		else if (startGameButton.contains(mouse_pos)) return new GameContext();
+		else if (howToPlayButton.contains(mouse_pos)) return new PagerContext("How to play", "Take those pieces and move them around lol. Don't ask me how to play this haha.");
 	}
 	if (event.type == sf::Event::KeyPressed) {
 	}
@@ -23,6 +23,7 @@ sf::Texture MenuContext::render(const sf::Vector2f & mouse_pos) {
 
 	rentex.draw(text);
 	rentex.draw(quitButton);
+	rentex.draw(howToPlayButton);
 	rentex.draw(startGameButton);
 	
 
