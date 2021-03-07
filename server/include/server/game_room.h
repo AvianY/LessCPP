@@ -1,6 +1,7 @@
 #ifndef SERVER_GAME_ROOM_H
 #define SERVER_GAME_ROOM_H
 
+#include <iso646.h>
 #include <SFML/Network.hpp>
 
 class GameRoom {

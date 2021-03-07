@@ -7,7 +7,7 @@
 
 #include "settings.h"
 #include <string>
-
+#include <iso646.h>
 
 // helper for menu creation
 

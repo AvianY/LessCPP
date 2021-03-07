@@ -9,15 +9,19 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 
+#ifdef __linux__
+#include <unistd.h>
+#endif // __linux__
 
 static bool RUN = true;
+
+#ifdef __linux__
 void ctrlCHandler(int)
 {
     RUN = false;
 }
-
+#endif // __linux__
 
 int main() {
 #ifdef __linux__
