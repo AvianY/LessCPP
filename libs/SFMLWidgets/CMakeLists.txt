@@ -1,4 +1,4 @@
-add_library(sfml-widgets src/button.cc src/text_input.cc)
+add_library(sfml-widgets src/button.cc src/text_input.cc src/framed_text.cc)
 
 target_link_libraries(sfml-widgets sfml-graphics)
 

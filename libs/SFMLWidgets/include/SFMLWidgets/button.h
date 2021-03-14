@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Shape.hpp>
 
 #include "SFMLWidgets/settings.h"
+#include "SFMLWidgets/framed_text.h"
 #include <string>
 
 
@@ -14,25 +15,13 @@
 namespace widget
 {
 
-class Button : public sf::Drawable
+class Button : public FramedText
 {
-private:
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-
-    sf::RectangleShape m_frame;
-    sf::Text m_text;
-    uint m_chPixelWidth;
-
-
 public:
-    Button(std::string text, const Settings& S);
+    Button(const std::string& text, const Settings& S);
     Button() = delete;
 
-    void setPosition(uint x, uint y);
-    void setTextFillColor(const sf::Color&);
-
-    bool contains(sf::Vector2f pos) { return m_frame.getGlobalBounds().contains(pos); }
-
+    bool contains(sf::Vector2f pos);
 };
 
 }
