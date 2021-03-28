@@ -21,24 +21,27 @@ class ListView : public sf::Drawable
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    std::vector<std::string> m_list;
-
     sf::RectangleShape m_frame;
     std::vector<sf::Text> m_lines;
 
-    size_t m_scroll_line = 0;
-    size_t m_width;
-    size_t m_height;
+    int m_scroll_idx = 0; // iterator, that points to the first line to be displayed
 
-    size_t m_chPixelWidth;
-    size_t m_chSize;
+    int m_vertical_spacing;
+    int m_displayed_lines;
+
+    int m_chSize;
+    int m_chPixelWidth;
 
 public:
     ListView() = delete;
 
-    ListView(std::vector<std::string> list, size_t width, size_t height, const Settings& S);
+    ListView(const std::vector<std::string>& list, int width, int height, const Settings& S);
 
     void setPosition(uint x, uint y);
+
+    bool contains(sf::Vector2f pos);
+
+    void scroll(int mousewheel_delta);
 };
 
 }
