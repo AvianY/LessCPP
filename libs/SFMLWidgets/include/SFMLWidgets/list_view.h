@@ -22,12 +22,15 @@ private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
     sf::RectangleShape m_frame;
+
+    int m_vertical_spacing;
+    int m_displayed_lines;
+    
+    sf::RectangleShape m_scrollbar;
     std::vector<sf::Text> m_lines;
 
     int m_scroll_idx = 0; // iterator, that points to the first line to be displayed
 
-    int m_vertical_spacing;
-    int m_displayed_lines;
 
     int m_chSize;
     int m_chPixelWidth;
